@@ -2,32 +2,25 @@
 
 import cv2
 import math
+from mtcnn import MTCNN
 import tqdm
 
-def highlightFace(net, frame, conf_threshold=0.7):
-    frameOpencvDnn=frame.copy()
-    frameHeight=frameOpencvDnn.shape[0]
-    frameWidth=frameOpencvDnn.shape[1]
-    blob=cv2.dnn.blobFromImage(frameOpencvDnn, 1.0, (200,200), [104, 117, 123], True, False)
-
-    net.setInput(blob)
-    detections=net.forward()
-    faceBoxes=[]
-    for i in range(detections.shape[2]):
-        confidence=detections[0,0,i,2]
-        if confidence>conf_threshold:
-            x1=int(detections[0,0,i,3]*frameWidth)
-            y1=int(detections[0,0,i,4]*frameHeight)
-            x2=int(detections[0,0,i,5]*frameWidth)
-            y2=int(detections[0,0,i,6]*frameHeight)
-            faceBoxes.append([x1,y1,x2,y2])
-            cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/150)), 8)
-    return frameOpencvDnn,faceBoxes
-
+def highlightFace(face_cascade, frame):
+    # This is done through the legacy harcascade models
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    facedata = face_cascade.detectMultiScale(gray, 1.1, 4)
+    faceBoxes = []
+    for face in facedata:
+        x1,y1,width,height = face
+        x2 = x1+width
+        y2 = y1+height
+        faceBoxes.append([x1,y1,x2,y2])
+    return faceBoxes
+            
 # Load caffee models by hassner and levi
+# And also facecascade model from opencv for face detection 
 
-faceProto="opencv_face_detector.pbtxt"
-faceModel="opencv_face_detector_uint8.pb"
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades +'haarcascade_frontalface_default.xml')
 ageProto="age_deploy.prototxt"
 ageModel="age_net.caffemodel"
 genderProto="gender_deploy.prototxt"
@@ -37,18 +30,16 @@ MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
 ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList=['Male','Female']
 
-faceNet=cv2.dnn.readNet(faceModel,faceProto)
 ageNet=cv2.dnn.readNet(ageModel,ageProto)
 genderNet=cv2.dnn.readNet(genderModel,genderProto)
-
 
 padding=20
 
 def get_tags_for_one_image(image_file):
     # read image
     frame = cv2.imread(image_file)
-    resultImg,faceBoxes=highlightFace(faceNet,frame)
-    if not faceBoxes:
+    faceBoxes=highlightFace(face_cascade,frame)
+    if faceBoxes==[]:
         return image_file.split("/")[-1]+","+"No face in this image"
     gender_age = {"Gender":[],"Age":[]}
     for faceBox in faceBoxes:

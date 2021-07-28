@@ -1,3 +1,8 @@
+Path: 
+/home/swagatika/Documents/Image_Search_Bias/OpenCV/Gender-and-Age-Detection
+
+
+
 Face Detection using dlib:
 
 https://towardsdatascience.com/cnn-based-face-detector-from-dlib-c3696195e01c
@@ -5,3 +10,6 @@ https://towardsdatascience.com/cnn-based-face-detector-from-dlib-c3696195e01c
 
 Gender Detection using caffe models
 https://talhassner.github.io/home/projects/Adience/Adience-data.html
+
+Full Body Gender  
+https://github.com/nghorbani/homogenus

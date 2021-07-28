@@ -1,33 +1,50 @@
+# Detect age and gender using detectron fall back mechanism
+
 #A Gender and Age Detection program by Mahesh Sawant
 
 import cv2
 import math
+from mtcnn import MTCNN
 import tqdm
 
-def highlightFace(net, frame, conf_threshold=0.7):
-    frameOpencvDnn=frame.copy()
-    frameHeight=frameOpencvDnn.shape[0]
-    frameWidth=frameOpencvDnn.shape[1]
-    blob=cv2.dnn.blobFromImage(frameOpencvDnn, 1.0, (200,200), [104, 117, 123], True, False)
+import torch, torchvision
+import detectron2
+import numpy as np
+import os, json, cv2, random
 
-    net.setInput(blob)
-    detections=net.forward()
-    faceBoxes=[]
-    for i in range(detections.shape[2]):
-        confidence=detections[0,0,i,2]
-        if confidence>conf_threshold:
-            x1=int(detections[0,0,i,3]*frameWidth)
-            y1=int(detections[0,0,i,4]*frameHeight)
-            x2=int(detections[0,0,i,5]*frameWidth)
-            y2=int(detections[0,0,i,6]*frameHeight)
-            faceBoxes.append([x1,y1,x2,y2])
-            cv2.rectangle(frameOpencvDnn, (x1,y1), (x2,y2), (0,255,0), int(round(frameHeight/150)), 8)
-    return frameOpencvDnn,faceBoxes
+# import some common detectron2 utilities
+from detectron2 import model_zoo
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+from detectron2.data import MetadataCatalog, DatasetCatalog
 
-# Load caffee models by hassner and levi
+    
+def highlightFace(detectron_model, frame_record):
+    faceBoxes = []
+    outputs = detectron_model(frame_record)
 
-faceProto="opencv_face_detector.pbtxt"
-faceModel="opencv_face_detector_uint8.pb"
+    boxes = outputs["instances"].pred_boxes
+    pred_classes = outputs['instances'].pred_classes.cpu().tolist()
+    pred_class_names = list(map(lambda x: class_names[x], pred_classes))
+    
+    frameHeight=frame_record.shape[0]
+    frameWidth=frame_record.shape[1]
+
+    for i, label in enumerate(pred_class_names):
+        if label == "person":
+            box = boxes[i]
+            x1,y1,x2,y2 = box.tensor.tolist()[0]
+            x1 = round(x1)
+            y1 = round(y1)
+            x2 = round(x2)
+            y2 = round(y2)
+            if (abs(y2-y1) > (frameHeight /10)) and (abs(x2-x1) > frameWidth /10):
+                faceBoxes.append([x1,y1,x2,y2])
+            
+    return faceBoxes
+
+# Load caffee models by hassner and levi            
+
 ageProto="age_deploy.prototxt"
 ageModel="age_net.caffemodel"
 genderProto="gender_deploy.prototxt"
@@ -37,18 +54,28 @@ MODEL_MEAN_VALUES=(78.4263377603, 87.7689143744, 114.895847746)
 ageList=['(0-2)', '(4-6)', '(8-12)', '(15-20)', '(25-32)', '(38-43)', '(48-53)', '(60-100)']
 genderList=['Male','Female']
 
-faceNet=cv2.dnn.readNet(faceModel,faceProto)
 ageNet=cv2.dnn.readNet(ageModel,ageProto)
 genderNet=cv2.dnn.readNet(genderModel,genderProto)
 
-
 padding=20
+
+# Detectron models
+cfg = get_cfg()
+# add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
+cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
+cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set threshold for this model
+# Find a model from detectron2's model zoo. You can use the https://dl.fbaipublicfiles... url as well
+cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+cfg.MODEL.DEVICE = "cpu"
+
+detectron_predictor = DefaultPredictor(cfg)
+class_names = MetadataCatalog.get("coco_2017_train").thing_classes
 
 def get_tags_for_one_image(image_file):
     # read image
     frame = cv2.imread(image_file)
-    resultImg,faceBoxes=highlightFace(faceNet,frame)
-    if not faceBoxes:
+    faceBoxes=highlightFace(detectron_predictor, frame)
+    if faceBoxes==[]:
         return image_file.split("/")[-1]+","+"No face in this image"
     gender_age = {"Gender":[],"Age":[]}
     for faceBox in faceBoxes:

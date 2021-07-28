@@ -4,6 +4,8 @@ import cv2
 import math
 from mtcnn import MTCNN
 import tqdm
+from facelib import AgeGenderEstimator
+import torch
 
 def highlightFace(net, frame, conf_threshold=0.1):
 	# This is done through the multitask model MTCNN
@@ -22,6 +24,7 @@ def highlightFace(net, frame, conf_threshold=0.1):
 # and MTCNN for face detection 
 
 faceNet = MTCNN()
+age_gender_detector = AgeGenderEstimator()
 
 ageProto="age_deploy.prototxt"
 ageModel="age_net.caffemodel"
@@ -49,22 +52,12 @@ def get_tags_for_one_image(image_file):
                    min(faceBox[3]+padding,frame.shape[0]-1),max(0,faceBox[0]-padding)
                    :min(faceBox[2]+padding, frame.shape[1]-1)]
 
-        blob=cv2.dnn.blobFromImage(face, 1.0, (227,227), MODEL_MEAN_VALUES, swapRB=False)
-        genderNet.setInput(blob)
-        genderPreds=genderNet.forward()
-        gender = genderList[genderPreds[0].argmax()]
-        #if abs(genderPreds[0][0]-genderPreds[0][1])<0.1:
-        #    gender = "Hard"
-        gender_l = gender_age["Gender"]
-        gender_l.append(gender)
-        gender_age["Gender"] = gender_l
+        blob=cv2.dnn.blobFromImage(face, 1.0, (112,112), MODEL_MEAN_VALUES, swapRB=False)
+        blob_facelib = blob.transpose(0,2,3,1)
+        genders, ages = age_gender_detector.detect(torch.Tensor(blob_facelib))
+        gender_age["Gender"] += genders
 
-        ageNet.setInput(blob)
-        agePreds=ageNet.forward()
-        age=ageList[agePreds[0].argmax()]
-        age_l = gender_age["Age"]
-        age_l.append(age)
-        gender_age["Age"] = age_l
+        
 
     # use this later if age is needed
     # return gender_age
