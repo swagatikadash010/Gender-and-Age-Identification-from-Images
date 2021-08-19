@@ -16,6 +16,13 @@ Add instructions here.
 	```
 	python mtcnn_convnet.py <path_to_directory>/*.jpg >mtcnn_convnet_output.txt
 	```
+	
+	```
+	python mtcnn_convnet.py /home/swagatika/Documents/Image_Search_Bias/data/Ranked\ Images/collected_data_ranked_top_10/Google_top_10_biologist_results_ranked/*.jpg >../Results/mtcnn_convNet/mtcnn_convNet_biologists.txt
+	
+	python mtcnn_convnet.py /home/swagatika/Documents/Image_Search_Bias/data/Ranked_Images/Biologists/*.jpg >../Results/mtcnn_convNet/mtcnn_convNet_Biologists.txt
+
+	```
 
 3. For Amazon's gender detection an example command is this:
 

@@ -5,6 +5,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import precision_recall_fscore_support
 
+rng = range(100)
 
 def process_file(fin):
     with open(fin) as f:
@@ -16,7 +17,17 @@ def process_file(fin):
                 if len(l_split) != 2:
                     continue
                 fn, val = l_split
-                data[fn] = val
+                if "both" in val.lower():
+                    val = "Both"
+                elif val.strip() == "Male" :
+                    val = "Male"
+                elif val.strip() == "Female":
+                    val = "Female"
+                else:
+                    val = "Uncertain"
+                if int(fn.replace(".jpg","").replace(".png","")) in rng:
+                    data[fn] = val
+                
     return data
 
 

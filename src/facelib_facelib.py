@@ -12,6 +12,7 @@ age_gender_detector = AgeGenderEstimator()
 
 def get_tags_for_one_image(image_file):
     img = plt.imread(image_file)
+    img = img[:,:,:3] # for PNG ommit last channel
     faces, boxes, scores, landmarks = face_detector.detect_align(img)
     if faces.tolist() != []:
         genders, ages = age_gender_detector.detect(faces)

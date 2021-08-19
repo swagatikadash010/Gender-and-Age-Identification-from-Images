@@ -1,0 +1,101 @@
+from AgeGenderEstimator: weights loaded
+0.jpg,Male
+10.jpg,Male
+11.jpg,No face in this image
+12.jpg,Contains both female and male
+13.jpg,Male
+14.jpg,No face in this image
+15.jpg,Male
+16.jpg,No face in this image
+17.jpg,Male
+18.jpg,No face in this image
+19.jpg,Male
+1.jpg,Female
+20.jpg,Contains both female and male
+21.jpg,No face in this image
+22.jpg,Female
+23.jpg,Male
+24.jpg,No face in this image
+25.jpg,Male
+26.jpg,Male
+27.jpg,Male
+28.jpg,Male
+29.jpg,Contains both female and male
+2.jpg,Female
+30.jpg,No face in this image
+31.jpg,Male
+32.jpg,Contains both female and male
+33.jpg,Contains both female and male
+34.jpg,Male
+35.jpg,Male
+36.jpg,No face in this image
+37.jpg,Contains both female and male
+38.jpg,Male
+39.jpg,Contains both female and male
+3.jpg,Male
+40.jpg,Contains both female and male
+41.jpg,No face in this image
+42.jpg,Male
+43.jpg,Contains both female and male
+44.jpg,No face in this image
+45.jpg,Contains both female and male
+46.jpg,No face in this image
+47.jpg,No face in this image
+48.jpg,No face in this image
+49.jpg,Female
+4.jpg,Male
+50.jpg,Male
+51.jpg,Female
+52.jpg,No face in this image
+53.jpg,Male
+54.jpg,Male
+55.jpg,No face in this image
+56.jpg,Male
+57.jpg,No face in this image
+58.jpg,Male
+59.jpg,Male
+5.jpg,Male
+60.jpg,Male
+61.jpg,Male
+62.jpg,No face in this image
+63.jpg,Contains both female and male
+64.jpg,Male
+65.jpg,Contains both female and male
+66.png,No face in this image
+67.jpg,Male
+68.jpg,No face in this image
+69.jpg,Contains both female and male
+6.jpg,Male
+70.jpg,No face in this image
+71.jpg,Female
+72.jpg,Male
+73.jpg,Male
+74.jpg,Male
+75.jpg,Male
+76.jpg,Male
+77.jpg,Male
+78.jpg,Male
+79.jpg,Male
+7.jpg,Male
+80.jpg,Male
+81.jpg,Contains both female and male
+82.jpg,Male
+83.jpg,Male
+84.jpg,Male
+85.jpg,No face in this image
+86.jpg,No face in this image
+87.jpg,Female
+88.jpg,Male
+89.png,No face in this image
+8.jpg,Contains both female and male
+90.jpg,Male
+91.jpg,Male
+92.jpg,Male
+93.jpg,Male
+94.jpg,Female
+95.jpg,Male
+96.jpg,Male
+97.jpg,Male
+98.jpg,Male
+99.jpg,Male
+9.jpg,Male

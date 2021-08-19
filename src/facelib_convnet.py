@@ -27,8 +27,8 @@ padding = 20
 
 def highlightFace(facelib_face_detector, image_file):
     img = plt.imread(image_file)
+    img = img[:,:,:3]
     faces, boxes, scores, landmarks = facelib_face_detector.detect_align(img)
-    print(boxes)
     faceBoxes = []
     for box in boxes:
         x1, y1, x2, y2 = box.tolist()

@@ -1,0 +1,101 @@
+from AgeGenderEstimator: weights loaded
+0.jpg,Female
+10.jpg,Male
+11.jpg,Male
+12.jpg,Male
+13.jpg,Contains both female and male
+14.jpg,Contains both female and male
+15.jpg,Contains both female and male
+16.jpg,Female
+17.jpg,Contains both female and male
+18.jpg,No face in this image
+19.jpg,Male
+1.jpg,Contains both female and male
+20.jpg,Contains both female and male
+21.jpg,Male
+22.jpg,Contains both female and male
+23.jpg,Male
+24.jpg,Male
+25.jpg,Female
+26.jpg,Female
+27.jpg,Female
+28.jpg,Male
+29.jpg,Female
+2.jpg,Female
+30.jpg,Contains both female and male
+31.jpg,Female
+32.jpg,Male
+33.jpg,Contains both female and male
+34.jpg,Female
+35.jpg,Male
+36.jpg,Male
+37.jpg,Male
+38.jpg,Male
+39.jpg,Contains both female and male
+3.jpg,Contains both female and male
+40.jpg,Female
+41.jpg,Female
+42.jpg,Contains both female and male
+43.jpg,Contains both female and male
+44.jpg,Female
+45.jpg,No face in this image
+46.jpg,Female
+47.jpg,Female
+48.jpg,Female
+49.jpg,Contains both female and male
+4.jpg,Female
+50.jpg,Male
+51.jpg,Contains both female and male
+52.jpg,Female
+53.jpg,Contains both female and male
+54.jpg,Contains both female and male
+55.jpg,Contains both female and male
+56.jpg,Contains both female and male
+57.jpg,Male
+58.jpg,Male
+59.jpg,Contains both female and male
+5.jpg,Female
+60.jpg,Male
+61.jpg,Contains both female and male
+62.jpg,Male
+63.jpg,Female
+64.jpg,Female
+65.jpg,Male
+66.jpg,Male
+67.jpg,Male
+68.jpg,Contains both female and male
+69.jpg,Male
+6.jpg,Male
+70.jpg,Male
+71.jpg,Female
+72.jpg,Contains both female and male
+73.jpg,Male
+74.jpg,Male
+75.jpg,Male
+76.jpg,Male
+77.jpg,Contains both female and male
+78.jpg,Male
+79.jpg,Contains both female and male
+7.jpg,Female
+80.jpg,Female
+81.jpg,Female
+82.jpg,Female
+83.jpg,Contains both female and male
+84.jpg,Contains both female and male
+85.jpg,Male
+86.jpg,Contains both female and male
+87.jpg,Contains both female and male
+88.jpg,Male
+89.jpg,Female
+8.jpg,Male
+90.jpg,Contains both female and male
+91.jpg,Contains both female and male
+92.jpg,Female
+93.jpg,Contains both female and male
+94.jpg,Male
+95.jpg,Male
+96.jpg,Contains both female and male
+97.jpg,Male
+98.jpg,Male
+99.jpg,Female
+9.jpg,Male
